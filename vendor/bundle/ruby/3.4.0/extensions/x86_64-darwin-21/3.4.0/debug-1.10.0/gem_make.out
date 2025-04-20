@@ -1,0 +1,20 @@
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+/Users/ronaldobalsimelli/.rbenv/versions/3.4.1/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-nfztxe sitelibdir\=./.gem.20250419-94698-nfztxe clean
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-nfztxe sitelibdir\=./.gem.20250419-94698-nfztxe
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-nfztxe sitelibdir\=./.gem.20250419-94698-nfztxe install
+/usr/bin/install -c -m 0755 debug.bundle ./.gem.20250419-94698-nfztxe/debug
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-nfztxe sitelibdir\=./.gem.20250419-94698-nfztxe clean

@@ -1,0 +1,23 @@
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/bootsnap-1.18.4/ext/bootsnap
+/Users/ronaldobalsimelli/.rbenv/versions/3.4.1/bin/ruby extconf.rb
+checking for fdatasync() in unistd.h... yes
+checking for whether -D_GNU_SOURCE is accepted as CPPFLAGS... yes
+checking for whether -O3 is accepted as CFLAGS... yes
+checking for whether -std=c99 is accepted as CFLAGS... yes
+creating Makefile
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/bootsnap-1.18.4/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-hyplc6 sitelibdir\=./.gem.20250419-94698-hyplc6 clean
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/bootsnap-1.18.4/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-hyplc6 sitelibdir\=./.gem.20250419-94698-hyplc6
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/bootsnap-1.18.4/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-hyplc6 sitelibdir\=./.gem.20250419-94698-hyplc6 install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20250419-94698-hyplc6/bootsnap
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/bootsnap-1.18.4/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-hyplc6 sitelibdir\=./.gem.20250419-94698-hyplc6 clean

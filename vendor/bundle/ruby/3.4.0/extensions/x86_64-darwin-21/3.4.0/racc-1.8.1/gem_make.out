@@ -1,0 +1,19 @@
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+/Users/ronaldobalsimelli/.rbenv/versions/3.4.1/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-9oamgy sitelibdir\=./.gem.20250419-94698-9oamgy clean
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-9oamgy sitelibdir\=./.gem.20250419-94698-9oamgy
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-9oamgy sitelibdir\=./.gem.20250419-94698-9oamgy install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20250419-94698-9oamgy/racc
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.4.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20250419-94698-9oamgy sitelibdir\=./.gem.20250419-94698-9oamgy clean
