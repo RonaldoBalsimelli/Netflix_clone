@@ -1,0 +1,13 @@
+<div class="p-4 text-white">
+  <h1 class="text-2xl font-bold mb-2"><%= @episode.name %></h1>
+
+  <% if @episode.image_url.present? %>
+    <img src="<%= @episode.image_url %>" alt="<%= @episode.name %>" class="mb-4 max-w-full rounded">
+  <% end %>
+
+  <p class="mb-2"><strong>Temporada:</strong> <%= @episode.season %></p>
+  <p class="mb-2"><strong>Episódio:</strong> <%= @episode.number %></p>
+  <p class="mb-2"><strong>Descrição:</strong> <%= @episode.summary&.html_safe || "Sem descrição." %></p>
+
+  <%= link_to "Voltar", show_path(@episode.show_id), class: "text-red-500 hover:underline block mt-4" %>
+</div>
