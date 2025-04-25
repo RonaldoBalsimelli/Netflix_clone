@@ -3,36 +3,20 @@ require 'json'
 require 'ostruct'
 
 class ShowsController < ApplicationController
-  def index
-    @shows = Show.all
-  end
-
   def show
     show_id = params[:id]
 
-    uri = URI("https://api.tvmaze.com/shows/#{show_id}?embed[]=cast&embed[]=episodes")
-    response = Net::HTTP.get(uri)
-    show_data = JSON.parse(response)
+    # Busca dados da série
+    show_url = URI("https://api.tvmaze.com/shows/#{show_id}")
+    show_response = Net::HTTP.get(show_url)
+    @show = OpenStruct.new(JSON.parse(show_response))
 
-    @show = OpenStruct.new(
-      id: show_data["id"],
-      name: show_data["name"],
-      summary: show_data["summary"],
-      image: show_data.dig("image", "original")
-    )
+    # Busca episódios da série
+    episodes_url = URI("https://api.tvmaze.com/shows/#{show_id}/episodes")
+    episodes_response = Net::HTTP.get(episodes_url)
+    episodes_data = JSON.parse(episodes_response)
 
-    @actors = (show_data.dig("_embedded", "cast") || []).map do |actor_data|
-      OpenStruct.new(
-        name: actor_data.dig("person", "name"),
-        image: actor_data.dig("person", "image", "medium")
-      )
-    end
-
-    @episodes = (show_data.dig("_embedded", "episodes") || []).map do |episode_data|
-      OpenStruct.new(
-        id: episode_data["id"],
-        name: episode_data["name"]
-      )
-    end
+    # Agrupar por temporada
+    @episodes_by_season = episodes_data.group_by { |ep| ep["season"] }
   end
 end

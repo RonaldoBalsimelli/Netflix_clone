@@ -1,68 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= @show.name %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      body {
-        background-color: #000;
-        color: #fff;
-      }
+<head>
+  <title><%= @show.name %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+    .banner {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .episode-card {
+      background-color: #111;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <a href="/" class="btn btn-danger mb-4">← Voltar</a>
 
-      .banner {
-        max-height: 500px;
-        object-fit: cover;
-        width: 100%;
-        border-radius: 10px;
-      }
+    <h1><%= @show.name %></h1>
+    
+    <% if @show.image %>
+      <img src="<%= @show.image["original"] %>" class="img-fluid d-block mx-auto rounded" style="max-width: 800px;" alt="<%= @show.name %>">
+    <% end %>
 
-      .episode, .actor {
-        background-color: #111;
-        border-radius: 10px;
-        padding: 10px;
-        margin-bottom: 10px;
-      }
+    <p><%= @show.summary&.html_safe %></p>
 
-      .actor img {
-        height: 100px;
-        width: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-right: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container mt-4">
-      <a href="/" class="btn btn-danger mb-4">← Voltar</a>
-
-      <h1><%= @show.name %></h1>
-      <% if @show.image.present? %>
-        <img src="<%= @show.image %>" alt="<%= @show.name %>" class="banner mb-4">
+    <% @episodes_by_season.each do |season, episodes| %>
+      <h2 class="mt-5">Temporada <%= season %></h2>
+      <% episodes.each do |ep| %>
+        <div class="episode-card">
+          <strong>Episódio <%= ep["number"] %>: <%= ep["name"] %></strong>
+          <p><%= ep["summary"]&.html_safe || "Sem descrição" %></p>
+          <% if ep["image"] %>
+            <img src="<%= ep["image"]["medium"] %>" alt="<%= ep["name"] %>" class="img-fluid mb-2" style="max-width: 300px;">
+          <% end %>
+          <a href="<%= episode_path(ep["id"]) %>" class="btn btn-outline-light btn-sm">Ver detalhes</a>
+        </div>
       <% end %>
-
-      <p><%= traduzir_para_portugues(@show.summary)&.html_safe %></p>
-
-      <h2 class="text-white text-xl font-bold mb-2">Episódios</h2>
-      <ul class="list-unstyled">
-        <% @episodes.each do |episode| %>
-          <li class="episode">
-          <%= link_to episode["name"], episode_path(episode["id"]), class: "text-red-600 hover:underline" %>
-          </li>
-        <% end %>
-      </ul>
-
-      <h3 class="mt-5 text-white text-xl font-bold mb-2">Elenco</h3>
-      <div class="row">
-        <% @actors.each do |actor| %>
-          <div class="col-md-4 actor d-flex align-items-center">
-            <% if actor["image"].present? %>
-              <img src="<%= actor["image"] %>" alt="<%= actor["name"] %>">
-            <% end %>
-            <strong class="text-white"><%= actor["name"] %></strong>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </body>
+    <% end %>
+  </div>
+</body>
 </html>

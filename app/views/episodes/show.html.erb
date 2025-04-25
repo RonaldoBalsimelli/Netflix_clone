@@ -17,8 +17,7 @@
 </head>
 <body>
   <div class="container mt-4">
-    <a href="/" class="btn btn-danger mb-4">← Voltar</a>
-
+  <a href="<%= show_path(@show_id) %>" class="btn btn-danger mb-4">← Voltar para Série</a>
     <h1><%= @episode.name %></h1>
     <p>Temporada <%= @episode.season %>, Episódio <%= @episode.number %></p>
 
