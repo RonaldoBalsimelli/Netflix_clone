@@ -4,28 +4,22 @@
   <title><%= @episode.name %></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
-      background-color: #000;
-      color: #fff;
-    }
-    .episode-img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+    body { background-color: #000; color: #fff; }
+    .container { margin-top: 40px; }
+    img { border-radius: 10px; max-width: 100%; height: auto; }
   </style>
 </head>
 <body>
-  <div class="container mt-4">
-  <a href="<%= show_path(@show_id) %>" class="btn btn-danger mb-4">← Voltar para Série</a>
+  <div class="container">
+    <a href="<%= show_path(@show_id) %>" class="btn btn-danger mb-4">← Voltar para Série</a>
     <h1><%= @episode.name %></h1>
-    <p>Temporada <%= @episode.season %>, Episódio <%= @episode.number %></p>
+    <p><strong>Temporada:</strong> <%= @episode.season %> | <strong>Episódio:</strong> <%= @episode.number %></p>
 
-    <% if @episode.image %>
-      <img src="<%= @episode.image %>" alt="<%= @episode.name %>" class="episode-img">
+    <% if @image %>
+      <img src="<%= @image %>" alt="<%= @episode.name %>" class="mb-3">
     <% end %>
 
-    <p><%= traduzir_para_portugues(@episode.summary)&.html_safe %></p>
+    <p><%= @translated_summary.html_safe %></p>
   </div>
 </body>
 </html>

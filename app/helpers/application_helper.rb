@@ -3,16 +3,13 @@ module ApplicationHelper
     require 'uri'
     require 'json'
   
-    def traduzir_para_portugues(texto)
-      return "" if texto.blank?
-  
-      url = URI("https://api.mymemory.translated.net/get?q=#{URI.encode_www_form_component(texto)}&langpair=en|pt-BR")
-      response = Net::HTTP.get(url)
-      data = JSON.parse(response)
-  
-      data["responseData"]["translatedText"]
-    rescue => e
-      texto # se der erro, retorna o texto original
+    def translate_text(text)
+      require "net/http"
+      require "json"
+    
+      uri = URI("https://api.mymemory.translated.net/get?q=#{URI.encode(text)}&langpair=en|pt")
+      res = Net::HTTP.get(uri)
+      json = JSON.parse(res)
+      json["responseData"]["translatedText"]
     end
   end
-  

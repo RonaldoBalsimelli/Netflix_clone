@@ -1,0 +1,135 @@
+# Note: This GitLab CI configuration is used for internal testing, users can ignore it.
+include:
+  - project: '${CI_PROJECT_NAMESPACE}/ci-libs-for-client-libraries'
+    file:
+      - '/${CI_PROJECT_NAME}/.gitlab-ci.yml'
+  - project: 'deepl/ops/ci-cd-infrastructure/gitlab-ci-lib'
+    file:
+      - '/templates/.buildkit.yml'
+      - '/templates/.secret-detection.yml'
+
+# Global --------------------------
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+stages:
+  - install
+  - check
+  - test
+#  - publish
+
+
+before_script:
+  - ruby --version
+  - bundle install
+
+# stage: install ----------------------
+
+package:
+  stage: install
+  parallel:
+      matrix:
+          - DOCKER_IMAGE: 'ruby:2.7'
+          - DOCKER_IMAGE: 'ruby:3.2'
+          - DOCKER_IMAGE: 'ruby:3.3'
+  image:
+    name: ${DOCKER_IMAGE}
+    entrypoint: ['/builds/deepl/backend/oss-client-libs/deepl-ruby']
+  script:
+    - bundle exec rake build
+  artifacts:
+    paths:
+      - pkg/
+
+# stage: check ----------------------
+
+.rubocop_base:
+  stage: check
+  image:
+    name: ruby:2.7
+    entrypoint: ['/builds/deepl/backend/oss-client-libs/deepl-ruby']
+  script: bundle exec rubocop
+
+rubocop_scheduled:
+  extends: .rubocop_base
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  retry: 2
+
+rubocop_manual:
+  extends: .rubocop_base
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "schedule"
+
+secret_detection:
+  extends: .secret-detection
+  stage: check
+  image: !reference [.secret-detection, image]
+  before_script:
+    - echo "overriding default before_script..."
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+
+license_check:
+  stage: check
+  before_script:
+    - echo "overriding default before_script..."
+  script:
+    - ./license_checker.sh '*.rb' | tee license_check_output.txt
+    - '[ ! -s license_check_output.txt ]'
+
+
+# stage: test ----------------------
+
+.test_base:
+    stage: test
+    extends: .test
+    parallel:
+        matrix:
+          - DOCKER_IMAGE: 'ruby:2.7'
+          - DOCKER_IMAGE: 'ruby:3.2'
+          - DOCKER_IMAGE: 'ruby:3.3'
+          - DOCKER_IMAGE: 'ruby:2.7'
+            USE_MOCK_SERVER: "use mock server"
+          - DOCKER_IMAGE: 'ruby:3.2'
+            USE_MOCK_SERVER: "use mock server"
+          - DOCKER_IMAGE: 'ruby:3.3'
+            USE_MOCK_SERVER: "use mock server"
+    image:
+      name: ${DOCKER_IMAGE}
+      entrypoint: ['/builds/deepl/backend/oss-client-libs/deepl-ruby']
+    script:
+      - >
+        if [[ ! -z "${USE_MOCK_SERVER}" ]]; then
+          echo "Using mock server"
+          export DEEPL_SERVER_URL=http://deepl-mock:3000
+          export DEEPL_MOCK_SERVER_PORT=3000
+          export DEEPL_PROXY_URL=http://deepl-mock:3001
+          export DEEPL_MOCK_PROXY_SERVER_PORT=3001
+        fi
+      - bundle exec rake test
+      - bundle exec rspec --format RspecJunitFormatter --out rspec.xml
+    artifacts:
+        reports:
+            coverage_report:
+                coverage_format: cobertura
+                path: coverage/coverage.xml
+            junit:
+                - rspec.xml
+        when: always
+
+test_scheduled:
+  extends: .test_base
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  retry: 2
+
+test_manual:
+  stage: test
+  extends: .test_base
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "schedule"

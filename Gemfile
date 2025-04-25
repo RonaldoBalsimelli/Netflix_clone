@@ -51,3 +51,10 @@ group :development do
 end
 
 gem "http"
+
+
+
+gem "deepl-rb", "~> 3.2"
+
+gem 'dotenv-rails'
+

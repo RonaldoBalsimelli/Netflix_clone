@@ -40,8 +40,10 @@
           <strong>Episódio <%= ep["number"] %>: <%= ep["name"] %></strong>
           <p><%= ep["summary"]&.html_safe || "Sem descrição" %></p>
           <% if ep["image"] %>
-            <img src="<%= ep["image"]["medium"] %>" alt="<%= ep["name"] %>" class="img-fluid mb-2" style="max-width: 300px;">
-          <% end %>
+  <img src="<%= ep["image"]["medium"] %>" alt="<%= ep["name"] %>" class="img-fluid mb-2" style="max-width: 300px;">
+<% end %>
+
+          
           <a href="<%= episode_path(ep["id"]) %>" class="btn btn-outline-light btn-sm">Ver detalhes</a>
         </div>
       <% end %>
