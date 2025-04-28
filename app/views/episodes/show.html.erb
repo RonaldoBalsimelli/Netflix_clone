@@ -7,19 +7,49 @@
     body { background-color: #000; color: #fff; }
     .container { margin-top: 40px; }
     img { border-radius: 10px; max-width: 100%; height: auto; }
+    h1 { margin-bottom: 20px; }
+    .buttons-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .episode-details {
+      background-color: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
+      animation: fadeIn 0.8s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="<%= show_path(@show_id) %>" class="btn btn-danger mb-4">← Voltar para Série</a>
-    <h1><%= @episode.name %></h1>
-    <p><strong>Temporada:</strong> <%= @episode.season %> | <strong>Episódio:</strong> <%= @episode.number %></p>
+    <div class="buttons-container">
+      <button onclick="history.back()" class="btn btn-secondary">← Voltar</button>
+      <% if @show_id %>
+        <a href="<%= show_path(@show_id) %>" class="btn btn-danger">🎬 Voltar para Série</a>
+      <% end %>
+      <a href="<%= root_path %>" class="btn btn-light text-dark">🏠 Home</a>
+    </div>
 
-    <% if @image %>
-      <img src="<%= @image %>" alt="<%= @episode.name %>" class="mb-3">
-    <% end %>
+    <div class="episode-details">
+      <h1><%= @episode.name %></h1>
+      <p><strong>Temporada:</strong> <%= @episode.season %> | <strong>Episódio:</strong> <%= @episode.number %></p>
 
-    <p><%= @translated_summary.html_safe %></p>
+      <% if @image %>
+        <img src="<%= @image %>" alt="<%= @episode.name %>" class="mb-4">
+      <% end %>
+
+      <% if @translated_summary.present? %>
+        <p><%= @translated_summary %></p>
+      <% else %>
+        <p>Descrição não disponível.</p>
+      <% end %>
+    </div>
   </div>
 </body>
 </html>

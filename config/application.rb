@@ -19,8 +19,6 @@ require "action_cable/engine"
 Bundler.require(*Rails.groups)
 Dotenv::Railtie.load
 
-Dotenv::Railtie.load
-
 module NetflixClone
   class Application < Rails::Application
     config.load_defaults 8.0

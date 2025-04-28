@@ -42,14 +42,15 @@
     <div class="row">
   <% @shows.each do |show| %>
     <div class="col-md-3 mb-4">
-      <%= link_to show_path(show["id"]), class: "card d-block text-decoration-none text-white" do %>
-        <img src="<%= show["image"] && show["image"]["medium"] %>" class="card-img-top" alt="<%= show["name"] %>">
-        <div class="card-body">
-        <h5 class="card-title text-black fw-bold text-center" style="margin-top: 10px;">
-        <%= show["name"] %>
-      </h5>
-        </div>
+    <%= link_to show_path(show["id"]), class: "card d-block text-decoration-none text-white" do %>
+      <% if show["image"] %>
+        <img src="<%= show["image"]["medium"] %>" class="card-img-top" alt="<%= show["name"] %>">
       <% end %>
+      <div class="card-body">
+      <h5 class="card-title text-black"><%= show["name"] %></h5>
+
+      </div>
+    <% end %>    
     </div>
   <% end %>
 </div>

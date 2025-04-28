@@ -1,32 +1,38 @@
 require 'net/http'
 require 'json'
 require 'ostruct'
-require 'deepl'
+require 'action_view/helpers/sanitize_helper'
 
 class EpisodesController < ApplicationController
+  include ActionView::Helpers::SanitizeHelper
+
   def show
-    url = URI("https://api.tvmaze.com/episodes/#{params[:id]}")
-    response = Net::HTTP.get(url)
-    episode_data = JSON.parse(response)
+    episode_id = params[:id]
 
-    # Prevenir erro de imagem ou show_id ausente
+    # Busca dados do episódio
+    episode_url = URI("https://api.tvmaze.com/episodes/#{episode_id}")
+    episode_response = Net::HTTP.get(episode_url)
+    episode_data = JSON.parse(episode_response)
+
     @episode = OpenStruct.new(episode_data)
-    @image = @episode.image ? @episode.image["original"] : nil
-    @show_id = episode_data.dig("show", "id")
+    @image = @episode.image&.dig("original")
 
-    # Limitar texto e traduzir
-    raw_summary = episode_data["summary"] || "Sem descrição disponível"
-    limited_summary = ActionView::Base.full_sanitizer.sanitize(raw_summary)[0..490]
+    # NOVO: buscar o show_id corretamente
+    if @episode&._links&.dig("show", "href")
+      show_url = URI(@episode._links["show"]["href"])
+      show_response = Net::HTTP.get(show_url)
+      show_data = JSON.parse(show_response)
 
-    @translated_summary = translate_text(limited_summary)
-  end
+      @show_id = show_data["id"]
+    else
+      @show_id = nil
+    end
 
-  private
-
-  def translate_text(text)
-    translator = DeepL::Translator.new(ENV["DEEPL_API_KEY"])
-    translator.translate_text(text, target_lang: "PT-BR").text
-  rescue
-    text
+    # Traduz descrição do episódio
+    if @episode.summary.present?
+      @translated_summary = strip_tags(@episode.summary)
+    else
+      @translated_summary = nil
+    end
   end
 end
