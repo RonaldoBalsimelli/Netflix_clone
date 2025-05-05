@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/deepl-rb
+    docker:
+    - image: circleci/ruby:2.7
+    steps:
+    - checkout
+
+    - run:
+        name: Bundle Install
+        command: bundle install --path vendor/bundle
+
+    # Run rspec
+    - type: shell
+      command: |
+        bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" |
+                            circleci tests split --split-by=timings)
+
+    # Run rubocop
+    - type: shell
+      command: |
+        bundle exec rubocop
+
+    # Save test results for timing analysis
+    - store_test_results:
+        path: test_results

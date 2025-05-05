@@ -1,0 +1,20 @@
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.2.0/gems/debug-1.10.0/ext/debug
+/Users/ronaldobalsimelli/.rbenv/versions/3.2.0/bin/ruby -I /Users/ronaldobalsimelli/.rbenv/versions/3.2.0/lib/ruby/3.2.0 extconf.rb
+creating Makefile
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.2.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250505-41764-apkga sitelibdir\=./.gem.20250505-41764-apkga clean
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.2.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250505-41764-apkga sitelibdir\=./.gem.20250505-41764-apkga
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.2.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250505-41764-apkga sitelibdir\=./.gem.20250505-41764-apkga install
+/usr/bin/install -c -m 0755 debug.bundle ./.gem.20250505-41764-apkga/debug
+
+current directory: /Users/ronaldobalsimelli/Netflix_clone/vendor/bundle/ruby/3.2.0/gems/debug-1.10.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250505-41764-apkga sitelibdir\=./.gem.20250505-41764-apkga clean

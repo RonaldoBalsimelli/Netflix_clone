@@ -1,0 +1,51 @@
+# Custom rubocop configuration
+
+require:
+  - rubocop-rspec
+
+AllCops:
+  DisplayCopNames: true
+  NewCops: enable
+  Exclude:
+    - deepl-rb.gemspec
+    - vendor/**/*
+  TargetRubyVersion: 2.7.5
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"
+
+Metrics/ParameterLists:
+  Max: 6
+
+Layout/LineLength:
+  Max: 100
+
+RSpec/ExampleLength:
+  Max: 10
+  CountAsOne: ['heredoc']
+
+RSpec/MessageSpies:
+  EnforcedStyle: 'receive'
+
+RSpec/MultipleExpectations:
+  Max: 8
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 7
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/SpecFilePathSuffix:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    DeepL: ''
+
+Style/Documentation:
+  Enabled: false
+
+Style/ModuleFunction:
+  EnforcedStyle: extend_self
